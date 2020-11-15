@@ -1,2 +1,396 @@
-# snake-Game.github.io
-none
+   <!DOCTYPE html>
+<html>
+<head>
+     <title>HTML</title>
+     <style>
+      *{
+         margin: 0;padding: 0;border: 0;
+         box-sizing: border-box;
+      }
+      .base{
+         width: 360px; height: 360px;
+         text-align: center;background: #2B2B2B;
+      }
+      #output{
+         background: white; width: 300px;
+         margin: 30px;
+         height: 300px; box-sizing: border-box;
+      }
+      #Score{
+         height: 20px;
+         width: 40px;
+         position: absolute;
+         left: 180px;
+         top: 15px;
+         padding-top: 3px;
+      }
+      .ext{
+         height: 90px;
+         width: 360px;
+         position: relative;
+         text-align: center;
+      }
+      .buttonBase{
+         width: 350px;
+         height: 240px;
+         background: #35385F;
+         text-align: center;
+         margin-left: 5px;
+         position: relative;
+         border-radius: 0px 0px 20px 20px;
+         box-shadow: 1px 1px 5px red;
+      }
+      h3{
+      font-weight: bold;
+      font-size: 1rem;background: #8EE046;
+      border: 1px solid white;
+      box-shadow: 1px 1px 5px black;
+      }
+      .b1{
+         height: 200px; width: 120px;
+         border-radius: 0px 300px 300px 10px;
+         position: absolute;
+         top: 20px;
+         left: 10px;
+      }
+      .b4{
+         height: 200px; width: 120px;
+         border-radius: 500px 0px 10px 500px;
+         position: absolute;
+         top: 20px;
+         right: 10px;
+      }
+      .b2{
+         height: 110px; width: 200px;
+         border-radius: 0px 0px 300px 300px;
+         position: absolute;
+         top: 10px;
+         left: 80px;
+      }
+      .b3{
+         height: 110px; width: 200px;
+         border-radius: 300px 300px 0px 0px;
+         position: absolute;
+         bottom: 10px;
+         left: 80px;
+      }
+     
+      .b1:hover{
+         box-shadow: -10px 0px 2px #46E06F;
+         transition: 0.1s;
+      }
+      .b2:hover{
+         box-shadow: 0px -10px 2px #46E06F;
+         transition: 0.1s;
+       }
+      .b3:hover{
+         box-shadow: 0px 10px 2px #46E06F;
+         transition: 0.1s;
+      }
+      .b4:hover{
+         box-shadow: 10px 0px 2px #46E06F;
+         transition: 0.1s;
+      }
+      
+      h3:hover{
+         background: #FC5CFF;
+         transition: 0.2s;
+      }
+      .bb{
+         background: #FF278C;
+         height: 30px;
+         width: 80px;
+         border-radius: 7px;
+         position: absolute;
+         border: solid #680433 2px;
+         box-shadow: 1px 1px 8px #35031A;
+         left: 20px;
+         top: 10px;
+      }
+      .bb:hover{
+         box-shadow: 2px 2px 20px #35031A;
+      }
+      P{
+      height: 20px;
+      width: 40px;
+      position: absolute;
+      left: 148px;
+      top: 15px;
+      color: black;
+      }
+       .dd{
+       background: #FF278C;
+       height: 30px;
+       width: 80px;
+       float: right;
+       border-radius: 7px;
+       border: solid #680433 2px;
+       position: absolute;
+       box-shadow: 1px 1px 8px #35031A;
+       right: 20px;
+       top: 10px;
+       font-size: 1rem;
+       padding: 2px;
+       }
+       .dd:hover{
+       box-shadow: 2px 2px 20px #35031A;
+       }
+       #speedButton{
+          position: absolute;
+          top: 50px;
+          left: 90px;
+          width: 90px;
+          height: 30px;
+          font-size: 0.8rem;
+          padding: 7px;
+          box-shadow: 1px 1px 8px #CFCFCF;
+       }
+       #speedButton:hover{
+          box-shadow: 5px 0px 0px #000000;
+       }
+       .output{
+           position: absolute;
+           top: 50px;
+           left: 180px;
+           width: 93px;
+           height: 30px;
+           color: blue;
+           padding: 5px;
+           background: #E9E9E9;
+           box-shadow: 2px 2px 1px #EAEAEA;
+           border-radius: 0px 30px 35px 0px;
+           font-size: 1rem;
+       }
+  
+     </style>
+</head>
+<body>
+   <div class="base"><canvas id="output"></canvas></div>
+   <div class="ext">
+      <h2 class="bb"onclick="start()"onmousedown="back.play()">START</h2>
+      <canvas id="Score"></canvas>
+      <p>score: </p>
+      <h4 class="dd"onclick="res()">ReSTART</h4>
+      <h1 class="output">Normal</h1>
+      <h1 id="speedButton" onclick="speedButton()">SET SPEED</h1>
+      </div>
+       
+      <div class="buttonBase">
+         <h3 class="b1"onclick="left()"></h3>
+         <h3 class="b4"onclick="right()"></h3>
+         <h3 class="b2"onclick="up()"></h3>
+         <h3 class="b3"onclick="down()"></h3>
+      </div>
+   <script >
+
+
+var FPS,k;         
+   k = 3;
+   
+   function speedButton() {
+      if (k == 1) {
+         var n1 = document.querySelector(".output");
+         n1.innerHTML = "Slow";
+         n1.style.color = "green";
+         FPS = 3;
+         k++;
+         return;
+      }
+      if (k == 2) {
+          var n2 = document.querySelector(".output");
+          n2.innerHTML = "Normal";
+          n2.style.color = "blue";
+          FPS = 5;
+         k++;
+         return;
+      }
+      if (k == 3) {
+          var n3 = document.querySelector(".output");
+          n3.innerHTML = "Fast";
+          n3.style.color = "#FF06E1";
+          FPS = 8;
+         k++;
+         return;
+      }
+      if (k == 4) {
+          var n4 = document.querySelector(".output");
+          n4.innerHTML = "Very Fast";
+          n4.style.color = "red";
+          FPS = 11;
+         k = 1;
+      }
+   }
+   
+   var can = document.getElementById("output");
+   var ctx = can.getContext("2d");
+   var score, dir, food, balls,ball,color,colors,lastColor;
+   FPS = 5;
+   
+   function init(){
+      dir = 'Right';
+      score = 0;
+      balls = [
+      {x: 40, y: 40},
+      {x: 60, y: 40},
+      {x: 80, y: 40},
+   ];}
+   
+   var colors = ["blue", "yellow", "randColor()"];
+   
+   init();
+   FooD();
+   
+   function randColor() {
+      hexs = "0123456789ABCDEF";
+      color = "#";
+      for (let i = 0; i < 6; i++) {
+         color += hexs[Math.floor(Math.random() * 16)];
+      }
+      return color;
+   }
+            
+   var back = new Audio();
+   back.src = "back.mp3";
+   
+   var s = 1;
+   function start(){
+      k = 10;
+      if (k == 10) {
+         var n5 = document.
+         querySelector("#speedButton");
+         n5.innerHTML = "SPEED LOCK";
+         n5.style.color = "#B800FF";
+      }
+      if(s==1){
+         s++;
+      setInterval(animation, 1000/FPS);
+   }}
+   function res(){
+      if (s == 2) {
+         init();
+         FooD();
+   }}
+   
+   // image  - - - - - - - - - - - - - 
+  // const foodi = new image();
+   // foodi.src = "food.png";
+  
+   function FooD(){
+      food = {x: Math.floor(Math.random()*13),
+              y: Math.floor(Math.random()*13)};
+         for(var j=0; j<balls.length; j++){
+            var ball = balls[j];
+         if(ball.x == food.x*20 && ball.y == food.y*10){
+            FooD();
+            
+         }
+      }
+   }
+   function right(){if(dir != 'Left'){dir = 'Right';}}
+   function left(){if(dir != 'Right'){dir = 'Left';}}
+   function up(){if(dir != 'Down'){dir = 'Up';}}
+   function down(){if(dir != 'Up'){dir = 'Down';}}
+   function speed0(){FPS= parseInt('3');}
+   function speed1(){FPS= parseInt('5');}
+   function speed2(){FPS= parseInt('8');}
+   function speed3(){FPS= parseInt('12');}
+
+   function add(){
+      if(dir=='Right'){
+      lastColor = colors[colors.length - 1];
+      colors.unshift(randColor());
+      var lastBall = balls[balls.length-1];
+      balls.push({x: lastBall.x+20, y: lastBall.y});
+      }
+      if(dir=='Left'){
+      lastColor = colors[colors.length - 1];
+      colors.push(randColor());
+      var lastBall = balls[balls.length-1];
+      balls.push({x: lastBall.x-20, y: lastBall.y});
+      }
+      if(dir=='Up'){
+      lastColor = colors[colors.length - 1];
+      colors.push(randColor());
+      var lastBall = balls[balls.length-1];
+      balls.push({x: lastBall.x, y: lastBall.y-10});
+      }
+      if(dir=='Down'){
+      lastColor = colors[colors.length - 1];
+      colors.push(randColor());
+      var lastBall = balls[balls.length-1];
+      balls.push({x: lastBall.x, y: lastBall.y+10});
+      }
+   }
+   function animation(){  //-----main snake-------//
+      
+      var lastBall = balls[balls.length-1];
+      ctx.clearRect(0,0,300,150);
+      balls.shift();
+      add();
+      
+      if(lastBall.x == food.x*20 
+         && lastBall.y == food.y*10){
+         add();
+         FooD();
+         score += 10;
+      }
+      for(var i = 0; i < balls.length; i++){
+         var ball = balls[i];
+         color = colors[i];
+         
+         ctx.fillStyle = color;
+         ctx.strokeStyle = "black";
+      
+      if(i == balls.length -1){
+         ctx.fillStyle = 'black';
+      }
+         
+      if(ball.x>280){
+            ball.x=0;
+         }     
+      if(ball.x<0){
+         ball.x=280;
+         }
+      if(ball.y>140){
+            ball.y=0;
+         }
+      if(ball.y<0){
+            ball.y=140;
+         }
+      if(ball.x==lastBall.x && ball.y==lastBall.y 
+         && i<balls.length-3){
+         alert("Game Over And Your Score Is :" + score);
+         init();
+      }   
+         ctx.fillRect(ball.x, ball.y, 20, 10);
+         ctx.strokeRect(ball.x, ball.y, 20, 10);
+      }
+      
+         ctx.fillStyle = "red";
+         ctx.fillRect(food.x*20, food.y*10, 20, 10);
+         
+         //--------------score------------------//
+         var canv = document.getElementById("Score");
+         var fpss = canv.getContext("2d");
+         fpss.fillStyle = "red";
+         fpss.font = "100px bold";
+         fpss.clearRect(0,0,300,150);
+         fpss.fillText(score,100,100);
+         console.log(FPS);
+   }
+
+      
+//-----------------------END-----------------------// 
+
+
+
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
